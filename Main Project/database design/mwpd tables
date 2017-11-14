@@ -1,0 +1,171 @@
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `Admin`;
+DROP TABLE IF EXISTS `communications_manager`;
+DROP TABLE IF EXISTS `crimes`;
+DROP TABLE IF EXISTS `crime_rank`;
+DROP TABLE IF EXISTS `files`;
+DROP TABLE IF EXISTS `missing_persons`;
+DROP TABLE IF EXISTS `news_table`;
+DROP TABLE IF EXISTS `officer_ranks`;
+DROP TABLE IF EXISTS `polce_files`;
+DROP TABLE IF EXISTS `police_officers`;
+DROP TABLE IF EXISTS `registered_civilians`;
+DROP TABLE IF EXISTS `suspects`;
+DROP TABLE IF EXISTS `tips`;
+DROP TABLE IF EXISTS `tip_section`;
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `suspect_crimes`;
+SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE `Admin` (
+    `admin_id` INT NOT NULL,
+    `id_type` VARCHAR(20) NOT NULL,
+    `DOB` DATE NOT NULL,
+    `user_id` INT NOT NULL,
+    PRIMARY KEY (`admin_id`)
+);
+
+CREATE TABLE `communications_manager` (
+    `manager_id` INT NOT NULL,
+    `manager_type` VARCHAR(20) NOT NULL,
+    `DOB` DATE NOT NULL,
+    `user_id` INT NOT NULL,
+    PRIMARY KEY (`manager_id`)
+);
+
+CREATE TABLE `crimes` (
+    `crime_id` INT NOT NULL,
+    `crime_name` VARCHAR(20) NOT NULL,
+    `crime_description` TEXT NOT NULL,
+    PRIMARY KEY (`crime_id`)
+);
+
+CREATE TABLE `crime_rank` (
+    `crime_rank` INT NOT NULL,
+    `rank_definition` VARCHAR(30) NOT NULL,
+    PRIMARY KEY (`crime_rank`)
+);
+
+CREATE TABLE `files` (
+    `file_id` INT NOT NULL,
+    `url` TEXT NOT NULL,
+    `type` VARCHAR(45) NOT NULL,
+    `manager_id` INT NOT NULL,
+    PRIMARY KEY (`file_id`)
+);
+
+CREATE TABLE `missing_persons` (
+    `persons_id` INT NOT NULL,
+    `SEX` VARCHAR(10) NOT NULL,
+    `first_name` VARCHAR(15) NOT NULL,
+    `last_name` VARCHAR(15) NOT NULL,
+    `picture` LONGTEXT NOT NULL,
+    `description` VARCHAR(50) NOT NULL,
+    `date_last_seen` DATE NOT NULL,
+    `location_last_seen` VARCHAR(15) NOT NULL,
+    `DOB` DATE NOT NULL,
+    `home_village` VARCHAR(25) NOT NULL,
+    `home_district` VARCHAR(40) NOT NULL,
+    `missing_person_type` INT NOT NULL,
+    `age` DATE NOT NULL,
+    PRIMARY KEY (`persons_id`)
+);
+
+CREATE TABLE `news_table` (
+    `id` INT NOT NULL,
+    `title` VARCHAR(40) NOT NULL,
+    `content` TEXT NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `officer_ranks` (
+    `rank_id` INT NOT NULL,
+    `rank_name` VARCHAR(30) NOT NULL,
+    PRIMARY KEY (`rank_id`)
+);
+
+CREATE TABLE `polce_files` (
+    `file_id` INT NOT NULL,
+    `url` TEXT NOT NULL,
+    `type` VARCHAR(25) NOT NULL,
+    `officer_id` INT(11) NOT NULL,
+    PRIMARY KEY (`file_id`)
+);
+
+CREATE TABLE `police_officers` (
+    `officer_id` INT NOT NULL,
+    `rank_id` INT NOT NULL,
+    `username` VARCHAR(25) NOT NULL,
+    `hashed_password` VARCHAR(70) NOT NULL,
+    `police_type` VARCHAR(20) NOT NULL,
+    PRIMARY KEY (`officer_id`)
+);
+
+CREATE TABLE `registered_civilians` (
+    `id` INT NOT NULL,
+    `first_name` VARCHAR(15) NOT NULL,
+    `last_name` VARCHAR(15) NOT NULL,
+    `phone_number` VARCHAR(12) NOT NULL,
+    `email_address` VARCHAR(25) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `suspects` (
+    `suspect_id` INT NOT NULL,
+    `SEX` VARCHAR(10) NOT NULL,
+    `first_name` VARCHAR(15) NOT NULL,
+    `last_name` VARCHAR(15) NOT NULL,
+    `crime_id` INT NOT NULL,
+    `crime_rank` INT NOT NULL,
+    `picture` LONGBLOB NOT NULL,
+    `description` TEXT NOT NULL,
+    `home_district` VARCHAR(20) NOT NULL,
+    `home_village` VARCHAR(40) NOT NULL,
+    `DOB` VARCHAR(10) NOT NULL,
+    `suspect_type` INT NOT NULL,
+    `age` DATE NOT NULL,
+    PRIMARY KEY (`suspect_id`)
+);
+
+CREATE TABLE `tips` (
+    `tip_id` INT NOT NULL,
+    `description` TEXT NOT NULL,
+    `tip_type` INT NOT NULL,
+    PRIMARY KEY (`tip_id`)
+);
+
+CREATE TABLE `tip_section` (
+    `tip_id` INT NOT NULL,
+    `tip_section` TEXT NOT NULL,
+    PRIMARY KEY (`tip_id`)
+);
+
+CREATE TABLE `users` (
+    `user_id` INT NOT NULL,
+    `username` VARCHAR(20) NOT NULL,
+    `hashed_password` VARCHAR(50) NOT NULL,
+    `user_type` VARCHAR(20) NOT NULL,
+    `first_name` VARCHAR(20) NOT NULL,
+    `last_name` VARCHAR(20) NOT NULL,
+    `DOB` DATE NOT NULL,
+    `age` DATE NOT NULL,
+    `email_address` VARCHAR(25) NOT NULL,
+    `sex` VARCHAR(10) NOT NULL,
+    `phome_number` VARCHAR(20) NOT NULL,
+    PRIMARY KEY (`user_id`)
+);
+
+CREATE TABLE `suspect_crimes` (
+    `suspect_id` INT NOT NULL,
+    `crime_id` INT NOT NULL,
+    PRIMARY KEY (`suspect_id`, `crime_id`)
+);
+
+ALTER TABLE `Admin` ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`);
+ALTER TABLE `communications_manager` ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`);
+ALTER TABLE `polce_files` ADD FOREIGN KEY (`officer_id`) REFERENCES `police_officers`(`officer_id`);
+ALTER TABLE `police_officers` ADD FOREIGN KEY (`rank_id`) REFERENCES `officer_ranks`(`rank_id`);
+ALTER TABLE `suspects` ADD FOREIGN KEY (`crime_id`) REFERENCES `crimes`(`crime_id`);
+ALTER TABLE `suspects` ADD FOREIGN KEY (`crime_rank`) REFERENCES `crime_rank`(`crime_rank`);
+ALTER TABLE `suspect_crimes` ADD FOREIGN KEY (`suspect_id`) REFERENCES `suspects`(`suspect_id`);
+ALTER TABLE `suspect_crimes` ADD FOREIGN KEY (`crime_id`) REFERENCES `crimes`(`crime_id`);
