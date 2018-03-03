@@ -33,7 +33,7 @@ require_once '../navigation/admin_header.php';
         </tr>
     </thead>
     <tbody>
-<?php 
+<?php
 $drivers = new Driver(0,0,$db,0);
 $view_drivers = $drivers->viewDrivers();
 ?>

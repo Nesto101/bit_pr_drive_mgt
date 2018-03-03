@@ -1,6 +1,6 @@
 <script>
 		function show()
-{   
+{
 var radios = document.getElementsByName("radios");
 var unit =  document.getElementById("unit");
 var box =  document.getElementById("box");
@@ -17,13 +17,13 @@ for(var i = 0; i < radios.length; i++) {
     else if(val == 'radio2'){
          unit.style.display = 'none';
          box.style.display = 'block';
-    }    
+    }
 
   }
  }
 }
 show();
-		</script>	
+		</script>
 <?php
 include 'includes.php';
 require '../includes/connect.php';
@@ -43,7 +43,8 @@ require_once '../navigation/admin_header.php';
 </div>
 <!-- Sign in form -->
 <div class="col-md-6">
-      <h1>Adding new user</h1>      
+      <h1>Adding new user</h1>
+			<p>Select user type before filling details</p>
 
 		<input type="radio" id="radio1" name="radios" value="radio1" onload="show();" onclick="show();" checked>
     <label for="radio1">Driver</label>
@@ -52,7 +53,7 @@ require_once '../navigation/admin_header.php';
     <label for="radio2">Employer</label>
 <section>
       <form class="form-horizontal" action="../models/signup_model.php" method="post" id="unit">
-      
+
         <div class="form-group">
           <label class="sr-only" for"first_name"></label>
           <div class="col-xs-6">
@@ -94,7 +95,7 @@ require_once '../navigation/admin_header.php';
           <p>Date of Birth<input type="date" class="form-control" id="DOB" name="DOB" required="required" placeholder="Date of Birth"></p>
           </div>
           </div>
-          
+
           <div class="form-group">
           <label class="sr-only" for"password"></label>
           <div class="col-xs-6">
@@ -125,7 +126,7 @@ require_once '../navigation/admin_header.php';
           Minibus <input type="radio"  id="minibus" name="vehicle" value="3" required="required" placeholder="Minibus"></p>
           </div>
           </div>
-         
+
           <div class="form-group">
           <label class="sr-only" for"portfolio">portfolio</label>
           <div class="col-xs-6">
@@ -135,10 +136,10 @@ require_once '../navigation/admin_header.php';
 
           <input type="submit" class="btn btn-primary" name="Login" value="Add Driver">
           <input type="reset" class="btn btn-warning" value="Clear Values">
-          
+
       </form>
 			<form class="form-horizontal" action="../models/signup_model.php" method="post" id="box">
-          
+
 
         <div class="form-group">
           <label class="sr-only" for"first_name"></label>
@@ -181,7 +182,7 @@ require_once '../navigation/admin_header.php';
           <input type="text" class="form-control" id="company_name" name="company_name" required="required" placeholder="Company Name">
           </div>
           </div>
-          
+
           <div class="form-group">
           <label class="sr-only" for"location"></label>
           <div class="col-xs-6">

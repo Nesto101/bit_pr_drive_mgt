@@ -26,8 +26,8 @@ include '/navigation/header.php';
           <input type="submit" class="btn btn-primary" name="login" value="login">
           <input type="reset" class="btn btn-warning" value="Clear">
 			</form>
-			
-	
+
+
 		 </div>
 	   </div>
 	</div>
